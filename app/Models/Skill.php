@@ -11,7 +11,8 @@ class Skill extends Model
 
     protected $fillable = ['name'];
 
-    public function sellers() {
-        return $this->belongsToMany(User::class, 'seller_skill');
+    public function sellers()
+    {
+        return $this->belongsToMany(User::class, 'seller_skill', 'skill_id', 'seller_id');
     }
 }

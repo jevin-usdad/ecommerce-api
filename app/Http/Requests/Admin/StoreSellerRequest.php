@@ -15,14 +15,17 @@ class StoreSellerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:users,email',
-            'password'   => 'required|min:6',
-            'mobile_no'  => 'nullable|string|max:20',
-            'country'    => 'nullable|string|max:100',
-            'state'      => 'nullable|string|max:100',
-            'skills'     => 'nullable|array',
-            'skills.*'   => 'exists:skills,id',
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:6',
+            'mobile_no' => 'nullable|string|max:20',
+            'country'   => 'nullable|string|max:100',
+            'state'     => 'nullable|string|max:100',
+
+            'skills'    => 'nullable|array',
+            'skills.*'  => 'required|string|max:255',
         ];
     }
+
+    
 }
