@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Product PDF</title>
@@ -16,32 +17,27 @@
             margin-bottom: 20px;
         }
 
-        .header h2 {
-            margin: 0;
-        }
-
-        .info-table {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .info-table td {
-            padding: 6px;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 15px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
+            vertical-align: middle;
         }
 
         th {
-            background: #f5f5f5;
+            background-color: #f5f5f5;
             text-align: left;
+        }
+
+        .brand-image {
+            width: 60px;
+            height: auto;
         }
 
         .total {
@@ -52,12 +48,14 @@
         .footer {
             position: fixed;
             bottom: 0;
+            width: 100%;
             text-align: center;
             font-size: 10px;
             color: #777;
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
@@ -65,47 +63,60 @@
         <p>Generated on {{ $generatedAt }}</p>
     </div>
 
-    <table class="info-table">
+    <!-- Product Info -->
+
+
+    <table>
         <tr>
-            <td><strong>Product Name:</strong></td>
+            <th width="25%">Product Name</th>
             <td>{{ $product->product_name }}</td>
         </tr>
         <tr>
-            <td><strong>Description:</strong></td>
+            <th>Description</th>
             <td>{{ $product->product_description }}</td>
         </tr>
     </table>
 
-    <h4>Brands</h4>
+    <!-- Brand Details -->
+    <h4>Brand Details</h4>
 
     <table>
         <thead>
             <tr>
-                <th>#</th>
-                <th>Brand Name</th>
-                <th>Price</th>
+                <th width="5%">#</th>
+                <th width="20%">Brand Name</th>
+                <th width="25%">Image</th>
+                <th width="20%">Price</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($product->brands as $index => $brand)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $brand->name }}</td>
+                    <td>{{ $brand->brand_name }}</td>
+                    <td>
+                        @if ($brand->image)
+                            <img src="{{ public_path('storage/' . $brand->image) }}" class="brand-image" alt="Brand Image">
+                        @else
+                            N/A
+                        @endif
+                    </td>
                     <td>{{ number_format($brand->price, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2" class="total">Total</td>
-                <td>{{ number_format($totalPrice, 2) }}</td>
+                <td colspan="3" class="total">Total Price</td>
+                <td class="total">{{ number_format($totalPrice, 2) }}</td>
             </tr>
         </tfoot>
     </table>
 
     <div class="footer">
-        <p>© {{ date('Y') }} Your Company Name</p>
+        © {{ date('Y') }} Your Company Name
     </div>
 
 </body>
+
 </html>

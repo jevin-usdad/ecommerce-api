@@ -8,11 +8,11 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductPdfController extends Controller
 {
-    public function show(Product $product)
+    public function show($id)
     {
-        $this->authorize('viewPdf', $product);
+        $product = Product::with('brands')->findOrFail($id);
 
-        $product->load('brands');
+        $this->authorize('viewPdf', $product);
 
         $totalPrice = $product->brands->sum('price');
 
@@ -20,12 +20,6 @@ class ProductPdfController extends Controller
             'product'     => $product,
             'totalPrice'  => $totalPrice,
             'generatedAt' => now()->format('d M Y, h:i A'),
-        ])
-        ->setPaper('a4', 'portrait')
-        ->setOptions([
-            'defaultFont' => 'sans-serif',
-            'isHtml5ParserEnabled' => true,
-            'isRemoteEnabled' => true,
         ]);
 
         return $pdf->stream(
