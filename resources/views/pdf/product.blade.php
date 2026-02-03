@@ -114,7 +114,7 @@
     </table>
 
     <div class="footer">
-        © {{ date('Y') }} Your Company Name
+        © {{ date('Y') }} Jevin
     </div>
 
 </body>
